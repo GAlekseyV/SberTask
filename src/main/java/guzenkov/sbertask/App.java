@@ -9,18 +9,27 @@ public class App {
     }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        SomeClass obj_1 = SomeClass.getInstance();
+        System.out.println("Create first object " + obj_1);
+        SomeClass obj_2 = SomeClass.getInstance();
+        System.out.println("Create second object " + obj_2);
     }
 }
 
 class SomeClass{
+    private static final SomeClass INSTANCE = new SomeClass();
+
+    public static SomeClass getInstance(){
+        return INSTANCE;
+    }
+
     private int integerField;
     private double doubleField;
     private String stringField;
     private UserType userTypeField;
 
     public void doRefresh(){
-        
+
     }
 }
 
