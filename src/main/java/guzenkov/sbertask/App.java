@@ -4,15 +4,8 @@
 package guzenkov.sbertask;
 
 public class App {
-    public String getGreeting() {
-        return "Hello world.";
-    }
-
     public static void main(String[] args) {
-        SomeClass obj_1 = SomeClass.getInstance();
-        System.out.println("Create first object " + obj_1);
-        SomeClass obj_2 = SomeClass.getInstance();
-        System.out.println("Create second object " + obj_2);
+
     }
 }
 
@@ -23,9 +16,16 @@ class SomeClass{
         return INSTANCE;
     }
 
+    @Property(name="integerField", type="integer")
     private int integerField;
+
+    @Property(name="doubleField", type="double")
     private double doubleField;
+
+    @Property(name="stringField", type="string")
     private String stringField;
+
+    @Property(name="userTypeField", type="object")
     private UserType userTypeField;
 
     public void doRefresh(){
@@ -34,5 +34,31 @@ class SomeClass{
 }
 
 class UserType{
+    private int integerNumber;
+    private double doubleNumber;
+    private String str;
 
+    public void setIntegerNumber(int number){
+        integerNumber = number;
+    }
+
+    public void setDoubleNumber(double number){
+        doubleNumber = number;
+    }
+
+    public void setString(String someStr){
+        str = someStr;
+    }
+
+    public int getIntegerNumber(){
+        return integerNumber;
+    }
+
+    public double getDoubleNumber(){
+        return doubleNumber;
+    }
+
+    public String getString(){
+        return str;
+    }
 }
