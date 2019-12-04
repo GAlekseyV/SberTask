@@ -3,62 +3,46 @@
  */
 package guzenkov.sbertask;
 
+import java.lang.reflect.*;
+import java.lang.annotation.*;
+
 public class App {
     public static void main(String[] args) {
-
-    }
-}
-
-class SomeClass{
-    private static final SomeClass INSTANCE = new SomeClass();
-
-    public static SomeClass getInstance(){
-        return INSTANCE;
-    }
-
-    @Property(name="integerField", type="integer")
-    private int integerField;
-
-    @Property(name="doubleField", type="double")
-    private double doubleField;
-
-    @Property(name="stringField", type="string")
-    private String stringField;
-
-    @Property(name="userTypeField", type="object")
-    private UserType userTypeField;
-
-    public void doRefresh(){
-
-    }
-}
-
-class UserType{
-    private int integerNumber;
-    private double doubleNumber;
-    private String str;
-
-    public void setIntegerNumber(int number){
-        integerNumber = number;
+       App app = new App();
+       Class<?> cl;
+       try{
+           cl = Class.forName("guzenkov.sbertask.SomeClass");
+           app.printFields(cl);
+       }catch(ClassNotFoundException e){
+           e.printStackTrace();
+       }
     }
 
-    public void setDoubleNumber(double number){
-        doubleNumber = number;
+    private void printFields(Class<?> cl){
+        Field[] fields = cl.getDeclaredFields();
+        for(Field f : fields){
+            printAnnotations(f);
+            Class<?> type = f.getType();
+            String name = f.getName();
+            String modifiers = Modifier.toString(f.getModifiers());
+            if(modifiers.length() > 0){
+                System.out.print(modifiers + " ");
+            }
+            System.out.println(type.getName() + " " + name + ";");
+        }
     }
 
-    public void setString(String someStr){
-        str = someStr;
-    }
-
-    public int getIntegerNumber(){
-        return integerNumber;
-    }
-
-    public double getDoubleNumber(){
-        return doubleNumber;
-    }
-
-    public String getString(){
-        return str;
+    private void printAnnotations(Field f){
+        Annotation[] anns = f.getDeclaredAnnotations();
+        for(Annotation a : anns){
+            String name = a.annotationType().getName();
+            String nameField = "";
+            String typeField = "";
+            if(a.annotationType() == Property.class){
+                nameField = f.getAnnotation(Property.class).name();
+                typeField = f.getAnnotation(Property.class).type();
+            }
+            System.out.println(name + ": " + nameField + ", " + typeField);
+        }
     }
 }
