@@ -1,6 +1,8 @@
 package guzenkov.sbertask;
 
 public enum TokenType{
+    WORD,
+    DIGIT,
     NAME,
     VALUE,
     OBJECT_START,

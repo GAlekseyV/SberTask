@@ -8,21 +8,20 @@ import java.lang.annotation.*;
 import java.util.regex.Pattern;
 import java.io.*;
 import java.util.Scanner;
+import java.util.LinkedList;
 
 public class App {
     public static void main(String[] args) {
-      // extracted(app);
-
-       try{
-            File file = new File("src/main/resources/someclass.properties");
-            Scanner scanner = new Scanner(file);
+        // extracted(app);
+        File file = new File("src/main/resources/onefield.properties");
+        try(Scanner scanner = new Scanner(file)){
             scanner.useDelimiter(Pattern.compile("\\b|\\p{javaWhitespace}+"));
-            while(scanner.hasNext()){
-                System.out.println(scanner.next());
-            }
-       }catch(FileNotFoundException e){
+            TokenReader tkReader = new TokenReader(scanner);
+            tkReader.load();
+            System.out.println(tkReader.getTokens());
+        }catch(FileNotFoundException e){
            e.printStackTrace();
-       } 
+        } 
     }
 
     private static void extracted(App app) {

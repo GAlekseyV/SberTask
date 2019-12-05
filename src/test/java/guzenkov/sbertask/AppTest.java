@@ -8,7 +8,8 @@ import static org.junit.Assert.*;
 
 public class AppTest {
 
-    @Test public void onlyOneInstanceOfSomeClass(){
+    @Test 
+    public void onlyOneInstanceOfSomeClass(){
         SomeClass obj_1 = SomeClass.getInstance();
         SomeClass obj_2 = SomeClass.getInstance();
         assertNotNull(obj_1);
