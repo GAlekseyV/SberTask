@@ -18,6 +18,7 @@ public class TokenReader{
             tokens.add(curTk);
             curTk = getToken();
         }
+        removeUndefinedTokens();
         joinTokensSplitedByDot();
     }
 
@@ -34,8 +35,17 @@ public class TokenReader{
         return tokens;
     }
 
+    private void removeUndefinedTokens(){
+        int indexOfDot = fidnIndexOfToketByType(TokenType.UNDEFINED);
+        while(indexOfDot != 0){
+            Token undefinedTk = tokens.get(indexOfDot);
+            tokens.remove(undefinedTk);
+            indexOfDot = fidnIndexOfToketByType(TokenType.UNDEFINED);
+        }
+    }
+
     private void joinTokensSplitedByDot(){
-        int indexOfDot = fidnIndexOfDotToket();
+        int indexOfDot = fidnIndexOfToketByType(TokenType.DOT);
         while(indexOfDot != 0){
             Token dotTk = tokens.get(indexOfDot);
             Token prevTk = tokens.get(indexOfDot - 1);
@@ -44,14 +54,14 @@ public class TokenReader{
             prevTk.setValue(joinValue);
             tokens.remove(dotTk);
             tokens.remove(nextTk);
-            indexOfDot = fidnIndexOfDotToket();
+            indexOfDot = fidnIndexOfToketByType(TokenType.DOT);
         }
     }
 
-    private int fidnIndexOfDotToket(){
+    private int fidnIndexOfToketByType(TokenType t){
         int index = 0;
         for(Token tk : tokens){
-            if(tk.getTokenType() == TokenType.DOT){
+            if(tk.getTokenType() == t){
                 index = tokens.indexOf(tk);
                 break;
             }
@@ -93,6 +103,9 @@ public class TokenReader{
 
     private boolean isDigit(String s){
         boolean isDigit = true;
+        if(s.isEmpty()){
+            return false;
+        }
         for(char c : s.toCharArray()){
             if(!Character.isDigit(c)){
                 isDigit = false;
@@ -104,6 +117,9 @@ public class TokenReader{
 
     private boolean isWord(String s){
         boolean isWord = true;
+        if(s.isEmpty()){
+            return false;
+        }
         for(char c : s.toCharArray()){
             if(!Character.isLetter(c) && !Character.isDigit(c)){
                 isWord = false;
