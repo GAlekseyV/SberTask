@@ -1,9 +1,6 @@
 package guzenkov.sbertask;
 
 import org.junit.Test;
-
-import jdk.jfr.Timestamp;
-
 import static org.junit.Assert.*;
 
 import java.util.LinkedList;
