@@ -5,17 +5,34 @@ package guzenkov.sbertask;
 
 import java.lang.reflect.*;
 import java.lang.annotation.*;
+import java.util.regex.Pattern;
+import java.io.*;
+import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
-       App app = new App();
-       Class<?> cl;
+      // extracted(app);
+
        try{
-           cl = Class.forName("guzenkov.sbertask.SomeClass");
-           app.printFields(cl);
-       }catch(ClassNotFoundException e){
+            File file = new File("src/main/resources/someclass.properties");
+            Scanner scanner = new Scanner(file);
+            scanner.useDelimiter(Pattern.compile("\\b|\\p{javaWhitespace}+"));
+            while(scanner.hasNext()){
+                System.out.println(scanner.next());
+            }
+       }catch(FileNotFoundException e){
            e.printStackTrace();
-       }
+       } 
+    }
+
+    private static void extracted(App app) {
+        Class<?> cl;
+           try{
+               cl = Class.forName("guzenkov.sbertask.SomeClass");
+               app.printFields(cl);
+           }catch(ClassNotFoundException e){
+               e.printStackTrace();
+           }
     }
 
     private void printFields(Class<?> cl){

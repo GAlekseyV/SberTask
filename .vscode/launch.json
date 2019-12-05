@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - App",
+            "request": "launch",
+            "mainClass": "guzenkov.sbertask.App",
+            "projectName": "SberTask_f1c8ccdb"
+        }
+    ]
+}
