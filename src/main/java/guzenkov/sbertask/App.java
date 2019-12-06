@@ -12,24 +12,17 @@ import java.util.Scanner;
 public class App {
     public static void main(String[] args) {
         // extracted(app);
+        SomeClass someClass = SomeClass.getInstance();
+        System.out.println(someClass);
+
         File file = new File("src/main/resources/someClass.properties");
         try(Scanner scanner = new Scanner(file)){
             scanner.useDelimiter(Pattern.compile("\\b|\\p{javaWhitespace}+"));
-            PropertiesParcer parser = new PropertiesParcer();
-            parser.parse(scanner);
+            someClass.doRefresh(scanner);
+            System.out.println(someClass);
         }catch(FileNotFoundException e){
            e.printStackTrace();
         } 
-    }
-
-    private static void extracted(App app) {
-        Class<?> cl;
-           try{
-               cl = Class.forName("guzenkov.sbertask.SomeClass");
-               app.printFields(cl);
-           }catch(ClassNotFoundException e){
-               e.printStackTrace();
-           }
     }
 
     private void printFields(Class<?> cl){
