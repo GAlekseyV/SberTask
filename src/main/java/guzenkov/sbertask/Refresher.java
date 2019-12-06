@@ -3,6 +3,7 @@ package guzenkov.sbertask;
 import java.lang.reflect.*;
 import java.lang.annotation.*;
 import java.util.regex.Pattern;
+
 import java.io.*;
 import java.util.Scanner;
 import java.util.HashMap;
@@ -26,9 +27,12 @@ public class Refresher{
         }catch (IllegalAccessException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+        }catch(NumberFormatException e){
+            e.printStackTrace(); 
         }catch(IllegalArgumentException e){
             e.printStackTrace();
         }
+        
     }
 
     private void getFields(Scanner sc){
@@ -44,14 +48,14 @@ public class Refresher{
         for(Field f : fields){
             // В данном задании подразумеваю, что есть только одна аннотация
             String nameFieldInFile = "";
-            String typeField = "";
+            String defaulValue = "";
 
             Annotation[] anns = f.getDeclaredAnnotations();
             if(anns.length > 0){
                 for(Annotation a : anns){
                     if(a.annotationType() == Property.class){
                         nameFieldInFile = f.getAnnotation(Property.class).name();
-                        typeField = f.getAnnotation(Property.class).type();
+                        defaulValue = f.getAnnotation(Property.class).defaultValue();
                     }
                 }
                 
@@ -66,49 +70,19 @@ public class Refresher{
                         f.setAccessible(true);
                         f.set(object, fieldsInFile.get(nameFieldInFile));
                     }
-                    //TODO Логировать ошибку не распознанный тип.
                 }else{//Установить значения по умолчанию
                     if(isIntegerField(f)){
                         f.setAccessible(true);
-                        f.set(object, 0);
+                        f.set(object, (int)Integer.parseInt(defaulValue));
                     }else if(isDoubleField(f)){
                         f.setAccessible(true);
-                        f.set(object, 0.0);
+                        f.set(object, (double)Double.parseDouble(defaulValue));
                     }else if(isStringField(f)){
                         f.setAccessible(true);
-                        f.set(object, "default");
+                        f.set(object, defaulValue);
                     }
                 }
                 
-            }
-        }
-    }
-
-    private void updateObjects(Class<?> cl) throws IllegalArgumentException, IllegalAccessException, ClassNotFoundException, InstantiationException,
-            InvocationTargetException, NoSuchMethodException, SecurityException {
-        Field[] fields = cl.getDeclaredFields();
-        for(Field f : fields){
-            // В данном задании подразумеваю, что есть только одна аннотация
-            String objectName = "";
-            String typeField = "";
-
-            Annotation[] anns = f.getDeclaredAnnotations();
-            if(anns.length > 0){
-                for(Annotation a : anns){
-                    if(a.annotationType() == Property.class){
-                        objectName = f.getAnnotation(Property.class).name();
-                        typeField = f.getAnnotation(Property.class).type();
-                    }
-                }
-                
-                if(typeField.equals("object")){
-                    if(objectsInFile.containsKey(objectName)){
-                        Class<?> c = Class.forName(objectName);
-                        Object object = c.getDeclaredConstructor().newInstance();
-                        Field[] objfields = c.getDeclaredFields();
-                    }else{//Установить значения по умолчанию
-                    }
-                } //TODO Логировать ошибку не верный тип.
             }
         }
     }
@@ -126,5 +100,9 @@ public class Refresher{
     private boolean isStringField(Field f){
         String typeName = f.getType().getName();
         return typeName.equals("java.lang.String");
+    }
+
+    private boolean isObjectField(Field f){
+        return !isIntegerField(f) && !isDoubleField(f) && !isStringField(f);
     }
 }

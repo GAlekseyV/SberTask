@@ -6,5 +6,5 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Property{
     String name();
-    String type() default "string";
+    String defaultValue();
 }

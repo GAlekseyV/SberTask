@@ -3,16 +3,16 @@ package guzenkov.sbertask;
 class SomeClass{
     private static final SomeClass INSTANCE = new SomeClass();
 
-    @Property(name="guzenkov.sbertask.SomeClass.integerField", type="integer")
+    @Property(name="guzenkov.sbertask.SomeClass.integerField", defaultValue = "-1")
     private int integerField = 0;
 
-    @Property(name="guzenkov.sbertask.SomeClass.doubleField", type="double")
+    @Property(name="guzenkov.sbertask.SomeClass.doubleField", defaultValue = "-1.0")
     private double doubleField = 0.0;
 
-    @Property(name="guzenkov.sbertask.SomeClass.stringField", type="string")
+    @Property(name="guzenkov.sbertask.SomeClass.stringField", defaultValue = "default")
     private String stringField = "init";
 
-    @Property(name="guzenkov.sbertask.SomeClass.userTypeField", type="object")
+    @Property(name="guzenkov.sbertask.SomeClass.userTypeField", defaultValue = "object")
     private UserType userTypeField = new UserType();
 
     private String filenameForRefresh = "src/main/resources/someClass.properties";
@@ -43,13 +43,13 @@ class SomeClass{
 }
 
 class UserType{
-    @Property(name="guzenkov.sbertask.userTypeField.integerNumber", type="integer")
+    @Property(name="guzenkov.sbertask.userTypeField.integerNumber", defaultValue="-1")
     private int integerNumber = 0;
 
-    @Property(name="guzenkov.sbertask.userTypeField.doubleNumber", type="double")
+    @Property(name="guzenkov.sbertask.userTypeField.doubleNumber", defaultValue="-1")
     private double doubleNumber = 0.0;
 
-    @Property(name="guzenkov.sbertask.userTypeField.str", type="string")
+    @Property(name="guzenkov.sbertask.userTypeField.str", defaultValue="default")
     private String str = "init";
 
     public void setIntegerNumber(int number){

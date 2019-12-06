@@ -10,36 +10,15 @@ public class App {
     public static void main(String[] args) {
         // extracted(app);
         SomeClass someClass = SomeClass.getInstance();
+        System.out.println("Init");
         System.out.println(someClass);
+        someClass.setFileForRefresh("src/main/resources/oneobject.properties");
         someClass.doRefresh();
+        System.out.println("Refresh to default");
         System.out.println(someClass);
-    }
-
-    private void printFields(Class<?> cl){
-        Field[] fields = cl.getDeclaredFields();
-        for(Field f : fields){
-            printAnnotations(f);
-            Class<?> type = f.getType();
-            String name = f.getName();
-            String modifiers = Modifier.toString(f.getModifiers());
-            if(modifiers.length() > 0){
-                System.out.print(modifiers + " ");
-            }
-            System.out.println(type.getName() + " " + name + ";");
-        }
-    }
-
-    private void printAnnotations(Field f){
-        Annotation[] anns = f.getDeclaredAnnotations();
-        for(Annotation a : anns){
-            String name = a.annotationType().getName();
-            String nameField = "";
-            String typeField = "";
-            if(a.annotationType() == Property.class){
-                nameField = f.getAnnotation(Property.class).name();
-                typeField = f.getAnnotation(Property.class).type();
-            }
-            System.out.println(name + ": " + nameField + ", " + typeField);
-        }
+        someClass.setFileForRefresh("src/main/resources/SomeClass.properties");
+        someClass.doRefresh();
+        System.out.println("Refresh from file");
+        System.out.println(someClass);
     }
 }
