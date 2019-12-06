@@ -34,6 +34,7 @@ public class PropertiesParcer{
     }
 
     private boolean hasNextField(){
+        // Поле имеет формат: name = value
         boolean isNextField = false;
         if(tokens.size() > 2){
             if(tokens.get(0).getTokenType() == TokenType.WORD
@@ -47,6 +48,7 @@ public class PropertiesParcer{
     }
 
     private boolean hasNextObject(){
+        //Объект имеет формат: name = {name:value, ...}
         boolean isNextObject = false;
         if(tokens.size() > 2){
             if(tokens.get(0).getTokenType() == TokenType.WORD

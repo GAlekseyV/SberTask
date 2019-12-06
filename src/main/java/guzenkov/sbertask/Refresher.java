@@ -59,7 +59,7 @@ public class Refresher{
                     }
                 }
                 
-                if(fieldsInFile.containsKey(nameFieldInFile)){
+                if(fieldsInFile.containsKey(nameFieldInFile)){ // Поле есть в файле
                     if(isIntegerField(f)){
                         f.setAccessible(true);
                         f.set(object, (int)Integer.parseInt(fieldsInFile.get(nameFieldInFile)));

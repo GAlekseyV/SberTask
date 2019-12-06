@@ -3,9 +3,6 @@
  */
 package guzenkov.sbertask;
 
-import java.lang.reflect.*;
-import java.lang.annotation.*;
-
 public class App {
     public static void main(String[] args) {
         // extracted(app);

@@ -43,13 +43,10 @@ class SomeClass{
 }
 
 class UserType{
-    @Property(name="guzenkov.sbertask.userTypeField.integerNumber", defaultValue="-1")
     private int integerNumber = 0;
 
-    @Property(name="guzenkov.sbertask.userTypeField.doubleNumber", defaultValue="-1")
     private double doubleNumber = 0.0;
 
-    @Property(name="guzenkov.sbertask.userTypeField.str", defaultValue="default")
     private String str = "init";
 
     public void setIntegerNumber(int number){

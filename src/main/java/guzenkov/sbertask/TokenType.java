@@ -1,16 +1,16 @@
 package guzenkov.sbertask;
 
 public enum TokenType{
-    WORD,
-    DIGIT,
-    NAME,
+    WORD,   // слово
+    DIGIT,  // число
+    NAME,   
     VALUE,
-    OBJECT_START,
-    OBJECT_END,
-    DOT,
-    COMMA,
-    EQUAL,
-    COLON,
-    UNDEFINED,
-    EOF
+    OBJECT_START,   // идентификатор начала объекта
+    OBJECT_END,     // идентификатор конца объекта
+    DOT,            // точка "."
+    COMMA,          // запятая ","
+    EQUAL,          // равно "="
+    COLON,          // двоеточие ":"
+    UNDEFINED,      // тип не определен
+    EOF             // конец файла
 }
