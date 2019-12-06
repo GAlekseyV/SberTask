@@ -56,25 +56,25 @@ public class Refresher{
                 }
                 
                 if(fieldsInFile.containsKey(nameFieldInFile)){
-                    if(typeField.equals("integer")){
+                    if(isIntegerField(f)){
                         f.setAccessible(true);
                         f.set(object, (int)Integer.parseInt(fieldsInFile.get(nameFieldInFile)));
-                    }else if(typeField.equals("double")){
+                    }else if(isDoubleField(f)){
                         f.setAccessible(true);
                         f.set(object, (double)Double.parseDouble(fieldsInFile.get(nameFieldInFile)));
-                    }else if(typeField.equals("string")){
+                    }else if(isStringField(f)){
                         f.setAccessible(true);
                         f.set(object, fieldsInFile.get(nameFieldInFile));
                     }
                     //TODO Логировать ошибку не распознанный тип.
                 }else{//Установить значения по умолчанию
-                    if(typeField.equals("integer")){
+                    if(isIntegerField(f)){
                         f.setAccessible(true);
                         f.set(object, 0);
-                    }else if(typeField.equals("double")){
+                    }else if(isDoubleField(f)){
                         f.setAccessible(true);
                         f.set(object, 0.0);
-                    }else if(typeField.equals("string")){
+                    }else if(isStringField(f)){
                         f.setAccessible(true);
                         f.set(object, "default");
                     }
@@ -111,5 +111,20 @@ public class Refresher{
                 } //TODO Логировать ошибку не верный тип.
             }
         }
+    }
+
+    private boolean isIntegerField(Field f){
+        String typeName = f.getType().getName();
+        return typeName.equals("int") || typeName.equals("long");
+    }
+
+    private boolean isDoubleField(Field f){
+        String typeName = f.getType().getName();
+        return typeName.equals("float") || typeName.equals("double");
+    }
+
+    private boolean isStringField(Field f){
+        String typeName = f.getType().getName();
+        return typeName.equals("java.lang.String");
     }
 }
