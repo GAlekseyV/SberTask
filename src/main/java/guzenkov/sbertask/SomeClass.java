@@ -31,7 +31,7 @@ class SomeClass{
                 "string field: " + this.stringField + ". " + userTypeField.toString();
     }
 
-    public void doRefresh(){
+    public synchronized void doRefresh(){
         Refresher refresher = new Refresher();
         refresher.run(this, filenameForRefresh);
     }

@@ -3,19 +3,44 @@
  */
 package guzenkov.sbertask;
 
+import java.io.IOException;
+import java.util.logging.*;
+
 public class App {
     public static void main(String[] args) {
-        // extracted(app);
+        Logger logger = Logger.getLogger("guzenkov.sbertask.App");
+        if(System.getProperty("java.util.logging.config.class") == null
+         && System.getProperty("java.util.logging.config.file") == null){
+             try{
+                Logger.getLogger("").setLevel(Level.ALL);
+                final int LOG_ROTATION_COUNT = 10;
+                var handler = new FileHandler("%h/javaLogs/app.log", 0, LOG_ROTATION_COUNT);
+                handler.setFormatter(new SimpleFormatter());
+                Logger.getLogger("").addHandler(handler);
+             }catch(IOException e){
+                 logger.log(Level.SEVERE, "Can't create log file handler", e);
+             }
+        }
+
+        String fileWithProperties = "src/main/resources/SomeClass.properties";
+        if(args.length > 0){
+            fileWithProperties = args[0];
+            logger.log(Level.INFO, "File name from args: " + fileWithProperties);
+        }
+
         SomeClass someClass = SomeClass.getInstance();
-        System.out.println("Init");
-        System.out.println(someClass);
+        logger.log(Level.INFO, "Init object.\n" + someClass.toString());
+
         someClass.setFileForRefresh("src/main/resources/oneobject.properties");
         someClass.doRefresh();
-        System.out.println("Refresh to default");
-        System.out.println(someClass);
-        someClass.setFileForRefresh("src/main/resources/SomeClass.properties");
+        logger.log(Level.INFO, "Refresh object by default.\n" + someClass.toString());
+
+        someClass.setFileForRefresh(fileWithProperties);
         someClass.doRefresh();
-        System.out.println("Refresh from file");
-        System.out.println(someClass);
+        logger.log(Level.INFO, "Refresh object from file.\n" + someClass.toString());
+
+        someClass.setFileForRefresh("not_exist.properties");
+        someClass.doRefresh();
+        logger.log(Level.INFO, "Refresh object from not existing file.\n" + someClass.toString());
     }
 }
